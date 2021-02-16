@@ -1,0 +1,19 @@
+#Run sklearns nmf on full multivariate input data
+
+#Initial test jobs:
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 10:00:00 -c 4 joblist_nmf
+
+last submitted
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 1:00:00 -c 1 joblist_nmf
+with tol=0.00001
+confused about why it is running so fast, and n_iter is so low (<200 so far) 
+
+
+#03-28.....newest version of sklearn has max iter set at 200 so duh iterations stopped at 199 and everything was super fast
+#More Tests:
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 10:00:00 -c 2 joblist_highiter 
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 2:00:00 -c 2 joblist_highiter 
+
+#04-15-2020 joblist_10-12 created to run 10 and 12 component nmf, based on stability results, submitted with:
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -N nmf_10-12 -w 4:00:00 -c 2 joblist_10-12 
+
