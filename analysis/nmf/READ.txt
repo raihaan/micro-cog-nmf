@@ -1,0 +1,37 @@
+#the compute_stability_corr.py script reads in nmf outputs from different splits of data
+#compares spatial similarity of components between two outputs
+#uses correlation based metric, correlate similarity of component scores btwn voxel pairs
+#for resource considerations, is run on diff ranges of k as opposed to all at once
+#below outlines joblist creation and submission
+
+
+for k in $(seq 10 2 18); do echo python compute_stability_corr.py $k;done > joblist_compute_stability
+head -n1 joblist_compute_stability > test_one
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 1:00:00 -N testone -c 1 -j 1 test_one
+
+tail -n4 joblist_compute_stability > test_rest
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 1:30:00 -N testrest -c 1 -j 1 test_rest
+
+for k in $(seq 20 2 28); do echo python compute_stability_corr.py $k;done > joblist_compute_stability_20-28
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 1:30:00 -N twentys -c 1 -j 1 joblist_compute_stability_20-28
+for k in $(seq 30 2 38); do echo python compute_stability_corr.py $k;done > joblist_compute_stability_30-38
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 1:30:00 -N thirtys -c 1 -j 1 joblist_compute_stability_30-38
+
+for k in $(seq 40 2 48); do echo python compute_stability_corr.py $k;done > joblist_compute_stability_40-48
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 1:30:00 -N fortys -c 1 -j 1 joblist_compute_stability_40-48
+
+for k in $(seq 50 2 58); do echo python compute_stability_corr.py $k;done > joblist_compute_stability_50-58
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 1:30:00 -N fortys -c 1 -j 1 joblist_compute_stability_50-58
+
+for k in $(seq 60 2 68); do echo python compute_stability_corr.py $k;done > joblist_compute_stability_60-68
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 1:30:00 -N sixtys -c 1 -j 1 joblist_compute_stability_60-68
+
+for k in $(seq 2 2 8); do echo python compute_stability_corr.py $k;done > joblist_compute_stability_2-8
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 1:30:00 -N ones -c 1 -j 1 joblist_compute_stability_2-8
+
+for k in $(seq 70 2 78); do echo python compute_stability_corr.py $k;done > joblist_compute_stability_70-78
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 1:30:00 -N seventys -c 1 -j 1 joblist_compute_stability_70-78
+
+for k in $(seq 80 2 88); do echo python compute_stability_corr.py $k;done > joblist_compute_stability_80-88
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 1:30:00 -N eightys -c 1 -j 1 joblist_compute_stability_80-88
+
