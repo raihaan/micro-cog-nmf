@@ -1,0 +1,10 @@
+in this folder, input matrices for each of 10 splits are constructed for use in stability analysis
+for splits 1 to 10, subjects are split into age stratefied groups
+splits were constructed on my laptop, {A,B}splits_indices.p contain the subject indices for each split
+ie if you load raw data, subjects 0,1,4 go to split A and 2,3,5 go to B for example
+
+build_stability_input_matrices.py - cycles through splits in {A,B}splits_indices.p and builds input matrices for a and b groups, for each of 10 splits
+				  - outputs a_{0:10}.mat and b_{0:10}.mat, which are input to nmf later 
+
+cmds submitted:
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 00:15:00 joblist_buildsplits
