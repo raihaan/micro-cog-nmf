@@ -1,10 +1,90 @@
-in this folder, input matrices for each of 10 splits are constructed for use in stability analysis
-for splits 1 to 10, subjects are split into age stratefied groups
-splits were constructed on my laptop, {A,B}splits_indices.p contain the subject indices for each split
-ie if you load raw data, subjects 0,1,4 go to split A and 2,3,5 go to B for example
+testing how long/how much mem these nmf runs take
+final goal is to run nmf for each split for k = 10 -50+
+loops below spit out some joblists - how to best run these?
 
-build_stability_input_matrices.py - cycles through splits in {A,B}splits_indices.p and builds input matrices for a and b groups, for each of 10 splits
-				  - outputs a_{0:10}.mat and b_{0:10}.mat, which are input to nmf later 
+for k in $(seq 10 2 18); do for split in $(seq 0 9); do echo python nmf_stability.py ../stability_splits/a_${split}.mat $k k${k} a_${split}_k${k};    echo python nmf_stability.py ../stability_splits/b_${split}.mat $k k${k} b_${split}_k${k};  done; done > joblist_10-18
 
-cmds submitted:
-qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 00:15:00 joblist_buildsplits
+for k in $(seq 20 2 28); do for split in $(seq 0 9); do echo python nmf_stability.py ../stability_splits/a_${split}.mat $k k${k} a_${split}_k${k};    echo python nmf_stability.py ../stability_splits/b_${split}.mat $k k${k} b_${split}_k${k};  done; done > joblist_20-28
+
+for k in $(seq 30 2 38); do for split in $(seq 0 9); do echo python nmf_stability.py ../stability_splits/a_${split}.mat $k k${k} a_${split}_k${k};    echo python nmf_stability.py ../stability_splits/b_${split}.mat $k k${k} b_${split}_k${k};  done; done > joblist_30-38
+
+made some test joblists:
+head -n40 joblist_10-18 > test_one
+tail -n40 joblist_30-38 > test_two
+
+these two joblists test a range of granularities to see if higher k = more resources. submitting them, 09-04-2020 as follows:
+
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 6:00:00 -N testone -c 40 test_one
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 6:00:00 -N testtwo -c 40 test_two
+
+*logged into the compute nodes, and both were runnign at ~50gb when checked on htop. although was only ~15 mins in, so maybe spikes later
+the above jobs did not finish in time, only got a few outputs for test_one jobs. looking at logs, iterations were way high. so try with default tolerance
+10-04-2020 edited nmf_stability.py to run with default tol (was 0.00005 before) and resubmitting:
+
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 6:00:00 -N testone -c 40 test_one
+
+also curious how it will run with only 20 jobs, so doing:
+head -n 60 joblist_10-18 | tail -n20 > test_three
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 6:00:00 -N testthree -c 40 test_three
+
+...the above should have had a -j specification as well i think. doing -c 20 and -j 20 leads to threads per command = 4 instead of 2. try this also:
+head -n 80 joblist_10-18 | tail -n20 > test_four
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 6:00:00 -N testfour -c 20 -j 20 test_four
+
+one more test, chunks of 10. also finishes off joblist10-18
+tail -n 20 joblist_10-18 > test_five
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 4:00:00 -N testfive -c 10 test_five
+
+curious about the -j. tested it before but was at diff granularities so hard to say. so above test command for test_five worked, run time was 2:35, but deleted k18/*mat and trying the following for comparison
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 4:00:00 -N testfivejj -c 10 -j 10 test_five
+
+#testfivejj had same runtime as testfive, so the -j 10 didnt change anything
+how does -c 5 do
+head -n10 test_five > test_six
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 2:00:00 -N testsix -c 5 test_six
+
+the above commands got through the full joblist_10-18 list
+going with -c 20 iw 6:00:00 for joblist_20-28
+
+11-04-2020:
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 6:00:00 -N twentys -c 20 joblist_20-28
+
+all except 8 of the k28s finished in the above command
+grabbed just the k28s:
+grep k28 joblist_20-28 > joblist_28
+then manually edited so it contains only the 8 remaining and submitted:
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 4:00:00 -N twentyeightleftover -c 5 joblist_28
+
+also starting the 30s
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 6:00:00 -N thirtys -c 10 joblist_30-38
+#30s completed fine
+
+moving onto 40s, 50s joblists
+for k in $(seq 40 2 48); do for split in $(seq 0 9); do echo python nmf_stability.py ../stability_splits/a_${split}.mat $k k${k} a_${split}_k${k};    echo python nmf_stability.py ../stability_splits/b_${split}.mat $k k${k} b_${split}_k${k};  done; done > joblist_40-48
+
+for k in $(seq 50 2 58); do for split in $(seq 0 9); do echo python nmf_stability.py ../stability_splits/a_${split}.mat $k k${k} a_${split}_k${k};    echo python nmf_stability.py ../stability_splits/b_${split}.mat $k k${k} b_${split}_k${k};  done; done > joblist_50-58
+
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 4:00:00 -N fortys -c 5 joblist_40-48
+
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 6:00:00 -N fiftys -c 5 joblist_50-58
+
+for k in $(seq 60 2 68); do for split in $(seq 0 9); do echo python nmf_stability.py ../stability_splits/a_${split}.mat $k k${k} a_${split}_k${k};    echo python nmf_stability.py ../stability_splits/b_${split}.mat $k k${k} b_${split}_k${k};  done; done > joblist_60-68
+
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 6:00:00 -N sixtys -c 5 joblist_60-68
+
+for k in $(seq 2 2 8); do for split in $(seq 0 9); do echo python nmf_stability.py ../stability_splits/a_${split}.mat $k k${k} a_${split}_k${k};    echo python nmf_stability.py ../stability_splits/b_${split}.mat $k k${k} b_${split}_k${k};  done; done > joblist_2-8
+
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 3:00:00 -N ones -c 10 joblist_2-8
+
+for k in $(seq 70 2 78); do for split in $(seq 0 9); do echo python nmf_stability.py ../stability_splits/a_${split}.mat $k k${k} a_${split}_k${k};    echo python nmf_stability.py ../stability_splits/b_${split}.mat $k k${k} b_${split}_k${k};  done; done > joblist_70-78
+
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 6:30:00 -N seventys -c 5 joblist_70-78
+
+for k in $(seq 80 2 88); do for split in $(seq 0 9); do echo python nmf_stability.py ../stability_splits/a_${split}.mat $k k${k} a_${split}_k${k};    echo python nmf_stability.py ../stability_splits/b_${split}.mat $k k${k} b_${split}_k${k};  done; done > joblist_80-88
+
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 7:00:00 -N eightys -c 5 joblist_80-88
+
+
+
+
+
