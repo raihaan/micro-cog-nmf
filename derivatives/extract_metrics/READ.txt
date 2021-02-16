@@ -1,0 +1,20 @@
+This folder contains python scripts which begin extracting data from text files to build nmf input matrices
+For each of ct, sa, md, fa, rd, data exists as text files per subject
+extract*py read in text files for each metric, concatenate them and write out matrices with dimensions # of vertices X # of subjects
+*raw.mat is raw data - read in .txt file, build matrix, write out
+*resid.mat is residualized for scanner
+
+Submitted commands:
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 00:30:00 -c 5 -j 1 joblist_extract
+
+
+build_nmf*py scripts read in the residualized data (outputs from extract*py) and:
+a) perform zscoring for each metric/hemisphere combination
+b) concatenate metrics and write out data
+c) writes out .mat files for each metric, for left hemisphere, right hemisphere, and whole brain
+*build_nmf_input_matrix.py prforms zscore pervertex across subjects while build_nmf_input_zall_matrix.py performs zscoring across BOTH subjects and vertices for each metric matrix
+Submitted commands:
+qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -w 00:30:00 -c 2 -j 1 joblist_buildnmfinput
+
+**above was run Mar 21 2020, but then subject list changed so rerun Apr 8**
+
