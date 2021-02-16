@@ -1,0 +1,8 @@
+python nmf_stability.py ../stability_splits/a_0.mat 28 k28 a_0_k28
+python nmf_stability.py ../stability_splits/b_0.mat 28 k28 b_0_k28
+python nmf_stability.py ../stability_splits/a_2.mat 28 k28 a_2_k28
+python nmf_stability.py ../stability_splits/b_4.mat 28 k28 b_4_k28
+python nmf_stability.py ../stability_splits/a_5.mat 28 k28 a_5_k28
+python nmf_stability.py ../stability_splits/b_6.mat 28 k28 b_6_k28
+python nmf_stability.py ../stability_splits/b_8.mat 28 k28 b_8_k28
+python nmf_stability.py ../stability_splits/b_9.mat 28 k28 b_9_k28
