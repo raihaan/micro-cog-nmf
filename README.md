@@ -4,17 +4,16 @@ Scripts are a mix of bash/python/matlab
 
 Workflow is as follows:
 
-1) derivatives/extract_metrics - run extract*py and build*py scripts to extract .txt data to form .mat file per metric
+1. derivatives/extract_metrics - run extract*py and build*py scripts to extract .txt data to form .mat file per metric
                  and use build*py scripts to build nmf input
 
 
-2) analysis
+2. analysis
+	2.1 nmf/stability - define splits to create input matrices for each split, using data from derivatives
 
-  nmf/stability - define splits to create input matrices for each split, using data from derivatives
+	  - run nmf for each split
 
-  - run nmf for each split
-
-  - compute stability for each split/granularity
+	  - compute stability for each split/granularity
 
   - plot results
 
