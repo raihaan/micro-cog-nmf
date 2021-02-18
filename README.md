@@ -9,6 +9,7 @@ Workflow is as follows:
 
 
 2. analysis
+
 	2.1 nmf/stability - define splits to create input matrices for each split, using data from derivatives
 
 	  - run nmf for each split
