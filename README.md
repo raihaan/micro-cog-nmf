@@ -9,15 +9,21 @@ Workflow is as follows:
 
 
 2) analysis
-        nmf/stability - define splits to create input matrices for each split, using data from derivatives
-                  - run nmf for each split
-                  - compute stability for each split/granularity
-                  - plot results
 
-        nmf - run k=10 nmf. results go in nmf/wb_res
+  nmf/stability - define splits to create input matrices for each split, using data from derivatives
 
-        slope_modelling/ph5-11 (laptop) - slopes_time.age_ph5-11.R does lmer to get cog slopes and intercepts.
-                                        - output is intercepts_slopes_398subj_ph5to11.csv
+  - run nmf for each split
 
-        pls_time.age_ph5-11/k10 - make pls sheets with make_pls_sheets.ipynb
-        pls_time.age_ph5-11/k10/int-slope - run pls
+  - compute stability for each split/granularity
+
+  - plot results
+
+  nmf - run k=10 nmf. results go in nmf/wb_res
+
+  slope_modelling/ph5-11 (laptop) - slopes_time.age_ph5-11.R does lmer to get cog slopes and intercepts.
+
+                                  - output is intercepts_slopes_398subj_ph5to11.csv
+
+  pls_time.age_ph5-11/k10 - make pls sheets with make_pls_sheets.ipynb
+
+  pls_time.age_ph5-11/k10/int-slope - run pls
