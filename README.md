@@ -16,14 +16,12 @@ Workflow is as follows:
 
 	  - compute stability for each split/granularity
 
-  - plot results
+          - plot results
 
-  nmf - run k=10 nmf. results go in nmf/wb_res
+	2.2 nmf/ - run k=10 nmf. results go in nmf/wb_res
 
-  slope_modelling/ph5-11 (laptop) - slopes_time.age_ph5-11.R does lmer to get cog slopes and intercepts.
+	2.3 slope_modelling/ph5-11 slopes_time.age_ph5-11.R does lmer to get cog slopes and intercepts.
 
-                                  - output is intercepts_slopes_398subj_ph5to11.csv
+        2.4 pls_time.age_ph5-11/k10 - make pls sheets with make_pls_sheets.ipynb
 
-  pls_time.age_ph5-11/k10 - make pls sheets with make_pls_sheets.ipynb
-
-  pls_time.age_ph5-11/k10/int-slope - run pls
+        2.5 pls_time.age_ph5-11/k10/int-slope - run pls
