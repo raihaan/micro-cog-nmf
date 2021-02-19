@@ -1,0 +1,60 @@
+in this folder pls is run to assess brain-behav relationships
+this analysis does not include age OR edu
+
+#analyzed at CIC:
+pls_int_slope_k10.m - reads in nmf weight and cog data .csv files and runs behavioural pls
+			      saves results to pls_res_k10.mat
+
+the above script was run from the command line:
+> module load matlab/R2016a
+> matlab -nodisplay -nosplash -nodesktop -r "run('pls_int_slope_k10.m');exit;"
+2 sig LVs 
+ans =
+
+    0.0044
+    0.0004
+    0.1635
+    0.3383
+    0.2004
+    0.8086
+    0.7346
+    0.9601
+    0.9347
+    0.9708
+    0.9997
+    0.9998
+    0.9969
+    0.9931
+
+
+pls_pct_cov =
+
+    0.5713
+    0.2001
+    0.0668
+    0.0466
+    0.0403
+    0.0272
+    0.0138
+    0.0130
+    0.0098
+    0.0071
+    0.0028
+    0.0012
+    0.0000
+    0.0000
+
+
+then .mat outputs saved in file to port to python for plotting
+> matlab -nodisplay -nosplash -nodesktop -r "run('plsres_mat_to_python.m');exit;"
+
+#analyzed on my laptop:
+.png figures created with:
+for l in {one,two}; do python plot_lv_res.py lv_${l}.mat lv_${l}_int-slope; done
+
+
+paperfigs_figure3_table2.ipynb - used to create bar plots of latent variable results, and print corr and confidence intervals of behaviours in each lv.
+				this notebook used for Fig 3 and Table 2 in paper
+				lvone_flat.png and lvtwo_flat.png are imported to Fig3
+paperfigs_figure4.ipynb - used to create lv score subplots, scatter plots, lv group figure for Figure 4
+plot_lv_schematic_overview.ipynb - used to create schematics figs of PLS/LVs in Fig 1
