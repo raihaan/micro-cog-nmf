@@ -22,6 +22,7 @@ Workflow is as follows:
 
 	2.3 slope_modelling/ph5-11 slopes_time.age_ph5-11.R does lmer to get cog slopes and intercepts.
 
-        2.4 pls_time.age_ph5-11/k10 - make pls sheets with make_pls_sheets.ipynb
+	2.4 pls_time.age_ph5-11/k10 - make pls sheets with make_pls_sheets.ipynb
+
 
         2.5 pls_time.age_ph5-11/k10/int-slope - run pls
