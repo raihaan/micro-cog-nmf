@@ -24,5 +24,4 @@ Workflow is as follows:
 
 	2.4 pls_time.age_ph5-11/k10 - make pls sheets with make_pls_sheets.ipynb
 
-
-        2.5 pls_time.age_ph5-11/k10/int-slope - run pls
+	2.5 pls_time.age_ph5-11/k10/int-slope - run pls
