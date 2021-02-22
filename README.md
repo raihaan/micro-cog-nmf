@@ -15,8 +15,7 @@ Workflow is as follows:
 	  - run nmf for each split
 
 	  - compute stability for each split/granularity
-
-          - plot results
+	  - plot results
 
 	2.2 nmf/ - run k=10 nmf. results go in nmf/wb_res
 
