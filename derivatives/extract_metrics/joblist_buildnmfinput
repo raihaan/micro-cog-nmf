@@ -1,0 +1,2 @@
+python build_nmf_input_matrix.py
+python build_nmf_input_zall_matrix.py
