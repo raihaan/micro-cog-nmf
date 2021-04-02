@@ -17,3 +17,4 @@ qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/p
 #04-15-2020 joblist_10-12 created to run 10 and 12 component nmf, based on stability results, submitted with:
 qbatch --header 'module load cobralab/2019b' --header 'source /home/m/mchakrav/patelmo6/virtual_envs/oxmicro/bin/activate' --env none -N nmf_10-12 -w 4:00:00 -c 2 joblist_10-12 
 
+wb_res/k10/z_shift_wb_ct-sa-md-fa-rd_k10.mat - output of nmf.py for k10. .mat file contains python dictionary with two keys: 'W' contains vertex x subject component matrix, 'H' contains component x subjects*weights weights
