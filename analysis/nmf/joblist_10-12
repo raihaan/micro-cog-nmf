@@ -1,0 +1,2 @@
+python nmf.py ../../derivatives/extract_metrics/z_shift_wb_ct-sa-md-fa-rd.mat 10 wb_res/k10 z_shift_wb_ct-sa-md-fa-rd_k10
+python nmf.py ../../derivatives/extract_metrics/z_shift_wb_ct-sa-md-fa-rd.mat 12 wb_res/k12 z_shift_wb_ct-sa-md-fa-rd_k12
