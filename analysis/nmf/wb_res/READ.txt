@@ -5,3 +5,7 @@ the following python command outputs joblist (make_rdpu_figs) for making figures
 > python ../../bin/mat_to_figs_wb_rdpy.py k10/z_shift_wb_ct-sa-md-fa-rd_k10.mat 25 figures_rdpu/k10/ > make_rdpu_figs
 
 commands in make_rdpu_figs require minc-toolkit, minc-toolkit-extras (https://bic-mni.github.io/  https://github.com/CoBrALab/minc-toolkit-extras)
+
+the following python command reads in nmf .mat results and outputs .png file of heatmap of H weights
+python paper_hplot.py k10/z_shift_wb_ct-sa-md-fa-rd_k10.mat figures_rdpu/k10/
+#k10_meannormalize.png is used in paper
