@@ -25,9 +25,9 @@ rightstatmap=$6
 rightcolumn=$7
 rightFDR=$8
 outputbase=$9
-left_mask="/data/chamal/projects/raihaan/projects/inprogress/whitehall/derivatives/surfsamp/mask_files/CIVET_2.0_mask_left_short.txt"
-right_mask="/data/chamal/projects/raihaan/projects/inprogress/whitehall/derivatives/surfsamp/mask_files/CIVET_2.0_mask_right_short.txt"
-cmap="/data/chamal/projects/raihaan/projects/inprogress/whitehall/analysis/bin/colourmapping/RdPu.lut"
+left_mask="CIVET_2.0_mask_left_short.txt"
+right_mask="CIVET_2.0_mask_right_short.txt"
+cmap="RdPu.lut"
 #Pick out column, multiply by mask and store in new tempfile
 cut -d " " -f $leftcolumn $leftstatmap > $TMPDIR/leftcol.txt
 vertstats_math -old_style_file -mult  $TMPDIR/leftcol.txt $left_mask  $TMPDIR/$(basename $leftstatmap)
