@@ -44,9 +44,10 @@ pls_pct_cov =
     0.0000
     0.0000
 
+pls results are saved in pls_res_k10.mat
 
 then .mat outputs saved in file to port to python for plotting
-> matlab -nodisplay -nosplash -nodesktop -r "run('plsres_mat_to_python.m');exit;"
+> matlab -nodisplay -nosplash -nodesktop -r "run('plsres_mat_to_python.m');exit;" #reads in pls_res_k10.mat
 
 #analyzed on my laptop:
 .png figures created with:
