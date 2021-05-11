@@ -246,13 +246,43 @@ allcog_int_slope <- merge(allcog_int_slope, mh_coef, by="MRI_ID", sort=FALSE)
 #write out
 write.csv(x=allcog_int_slope, file="intercepts_slopes_398subj_ph5to11.csv", row.names=FALSE)
 
-#fdr correct pvals
-ps_unadj<-c(summary(wordsmodel)$tTable[2:4,'p-value'])
-ps_unadj<-append(ps_unadj,c(summary(animalsmodel)$tTable[2:4,'p-value']))
-ps_unadj<-append(ps_unadj,c(summary(memmodel)$tTable[2:4,'p-value']))
-ps_unadj<-append(ps_unadj,c(summary(ah4model)$tTable[2:4,'p-value']))
-ps_unadj<-append(ps_unadj,c(summary(ahverbmodel)$tTable[2:4,'p-value']))
-ps_unadj<-append(ps_unadj,c(summary(ahnummodel)$tTable[2:4,'p-value']))
-ps_unadj<-append(ps_unadj,c(summary(mhmodel)$tTable[2:4,'p-value']))
-ps_adj<-p.adjust(ps_unadj,method="fdr")
-df_pvals<-cbind(ps_unadj,ps_adj)
+#bonf correct pvals
+time_psunadj<-c(summary(wordsmodel)$tTable[2,'p-value'])
+time_psunadj<-append(time_psunadj,c(summary(animalsmodel)$tTable[2,'p-value']))
+time_psunadj<-append(time_psunadj,c(summary(memmodel)$tTable[2,'p-value']))
+time_psunadj<-append(time_psunadj,c(summary(ah4model)$tTable[2,'p-value']))
+time_psunadj<-append(time_psunadj,c(summary(ahverbmodel)$tTable[2,'p-value']))
+time_psunadj<-append(time_psunadj,c(summary(ahnummodel)$tTable[2,'p-value']))
+time_psunadj<-append(time_psunadj,c(summary(mhmodel)$tTable[2,'p-value']))
+time_psadj<-p.adjust(time_psunadj,method="bonferroni")
+
+
+age_psunadj<-c(summary(wordsmodel)$tTable[3,'p-value'])
+age_psunadj<-append(age_psunadj,c(summary(animalsmodel)$tTable[3,'p-value']))
+age_psunadj<-append(age_psunadj,c(summary(memmodel)$tTable[3,'p-value']))
+age_psunadj<-append(age_psunadj,c(summary(ah4model)$tTable[3,'p-value']))
+age_psunadj<-append(age_psunadj,c(summary(ahverbmodel)$tTable[3,'p-value']))
+age_psunadj<-append(age_psunadj,c(summary(ahnummodel)$tTable[3,'p-value']))
+age_psunadj<-append(age_psunadj,c(summary(mhmodel)$tTable[3,'p-value']))
+age_psadj<-p.adjust(age_psunadj,method="bonferroni")
+
+
+time.age_psunadj<-c(summary(wordsmodel)$tTable[4,'p-value'])
+time.age_psunadj<-append(time.age_psunadj,c(summary(animalsmodel)$tTable[4,'p-value']))
+time.age_psunadj<-append(time.age_psunadj,c(summary(memmodel)$tTable[4,'p-value']))
+time.age_psunadj<-append(time.age_psunadj,c(summary(ah4model)$tTable[4,'p-value']))
+time.age_psunadj<-append(time.age_psunadj,c(summary(ahverbmodel)$tTable[4,'p-value']))
+time.age_psunadj<-append(time.age_psunadj,c(summary(ahnummodel)$tTable[4,'p-value']))
+time.age_psunadj<-append(time.age_psunadj,c(summary(mhmodel)$tTable[4,'p-value']))
+time.age_psadj<-p.adjust(time.age_psunadj,method="bonferroni")
+
+df_pvals<-as.data.frame(cbind(time_psunadj,time_psadj, age_psunadj, age_psadj, time.age_psunadj, time.age_psadj))
+df_pvals
+#time_psunadj   time_psadj age_psunadj age_psadj time.age_psunadj time.age_psadj
+#1 7.451189e-01 1.0000000000  0.09605736 0.6724015     1.884273e-01   1.000000e+00
+#2 1.549079e-01 1.0000000000  0.31201466 1.0000000     1.750383e-02   1.225268e-01
+#3 1.861999e-01 1.0000000000  0.06199765 0.4339835     4.286583e-02   3.000608e-01
+#4 3.745405e-05 0.0002621784  0.26249407 1.0000000     5.988808e-08   4.192166e-07
+#5 1.357351e-04 0.0009501457  0.44484228 1.0000000     5.632337e-07   3.942636e-06
+#6 1.543487e-03 0.0108044123  0.20380917 1.0000000     3.022692e-05   2.115885e-04
+#7 7.879555e-04 0.0055156884  0.08828283 0.6179798     1.102432e-03   7.717024e-03
