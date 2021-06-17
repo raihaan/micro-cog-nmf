@@ -11,36 +11,35 @@ the above script was run from the command line:
 2 sig LVs 
 ans =
 
-    0.0044
-    0.0004
-    0.1635
-    0.3383
-    0.2004
-    0.8086
-    0.7346
-    0.9601
-    0.9347
-    0.9708
-    0.9997
+    0.0042
+    0.0003
+    0.1092
+    0.2442
+    0.2194
+    0.7955
+    0.8194
+    0.9584
+    0.9460
+    0.9747
+    0.9993
+    0.9999
     0.9998
-    0.9969
-    0.9931
-
+    0.9986
 
 pls_pct_cov =
 
-    0.5713
-    0.2001
-    0.0668
-    0.0466
-    0.0403
-    0.0272
-    0.0138
-    0.0130
-    0.0098
-    0.0071
+    0.5689
+    0.1966
+    0.0649
+    0.0487
+    0.0405
+    0.0267
+    0.0164
+    0.0137
+    0.0115
+    0.0077
     0.0028
-    0.0012
+    0.0015
     0.0000
     0.0000
 
@@ -53,6 +52,17 @@ then .mat outputs saved in file to port to python for plotting
 .png figures created with:
 for l in {one,two}; do python plot_lv_res.py lv_${l}.mat lv_${l}_int-slope; done
 
+view_lv_stats.ipynb is used to merge demographic, nmf, pls data (demo_nmfk10_pls_int-slope.csv)
+                also used to view significant contributing brain and behav variables from lv
+
+demo_nmfk10_pls_int-slope.csv - csv containing demographics merged with nmf weights, merged with pls re>
+
+demo_behavscores_lvcontinuous_tform_lms.R - R script which runs lms of wave12score ~ lv1 + lv2 + age + >
+this script outputs a number of .png figures to figures/, mostly lvscore vs wave12score
+see script for plot creation
+
+demo_behavscores_lvcontinuous_lms.R - equivalent to demo_behavscores_lvcontinuous_tform_lms.R but
+uses untransformed data
 
 paperfigs_figure3_table2.ipynb - used to create bar plots of latent variable results, and print corr and confidence intervals of behaviours in each lv.
 				this notebook used for Fig 3 and Table 2 in paper
